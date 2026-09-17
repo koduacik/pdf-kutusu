@@ -3,7 +3,7 @@
 Tarayıcıda çalışan PDF takımı: birleştir, ayır, sayfa sil, döndür, sırala, JPG→PDF. Tek HTML dosyası, internet kapalıyken de çalışır.
 
 > Bu araç **Bunun Programı Var** kanalının 3. bölümünde sıfırdan yazıldı.
-> Video: <video-linki>  ·  Kanal: https://youtube.com/@programivar
+> Program sayfası: https://ozy2.com/programivar/pdf-kutusu/  ·  Kanal: https://youtube.com/@programivar
 
 ## İndir
 
