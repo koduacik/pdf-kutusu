@@ -16,6 +16,10 @@ Tek HTML dosyası, kurulum yok, internet kapalıyken de çalışır.
 Kaydedilen dosyanın adı, ilk açtığın dosyanın adının sonuna `_duzenlendi` eklenmiş hâlidir:
 `dilekce.pdf` → `dilekce_duzenlendi.pdf`.
 
+**Hiç indirmek istemiyorsan:** aynı düzenleyici tarayıcıda da çalışıyor → **https://ozy2.com/pdf**
+PDF'in orada da hiçbir sunucuya yüklenmez; düzenleyici, reklamlardan yalıtılmış ve internete
+çıkması tarayıcı tarafından engellenmiş bir çerçevede çalışır (ayrıntı: [Neden güvenli?](https://ozy2.com/pdf/nasil-kullanilir.html#guvenlik)).
+
 ## Ne yapar
 
 **Sayfa işleri**
