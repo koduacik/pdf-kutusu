@@ -7,3 +7,9 @@ build/
 *.sqlite3
 *.db
 veresiye.db
+
+node_modules/
+.pytest_cache/
+tests/cikti/
+tests/ekran/
+tests/ornekler/buyuk_101mb.pdf

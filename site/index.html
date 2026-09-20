@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PDF Kutusu — PDF birleştir, ayır, düzenle · dosyan yüklenmez</title>
+<meta name="description" content="Ücretsiz PDF düzenleyici: birleştir, ayır, sayfa sil, döndür, sırala, yazı değiştir, imza ekle, kalıcı karart. PDF'in sunucuya yüklenmez; her şey tarayıcında olur.">
+<!-- YER TUTUCU: ozy2.com/pdf yerine sitenin alan adını yaz (ör. pdfkutusu.com.tr) -->
+<link rel="canonical" href="https://ozy2.com/pdf/">
+<meta property="og:title" content="PDF Kutusu — dosyan yüklenmeden PDF düzenle">
+<meta property="og:description" content="Birleştir, ayır, sil, döndür, yazı değiştir, imza ekle. PDF'in bilgisayarından çıkmaz.">
+<meta property="og:url" content="https://ozy2.com/pdf/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='2' width='24' height='28' rx='4' fill='%230f766e'/%3E%3Cpath d='M10 11h12M10 16h12M10 21h7' stroke='white' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="site.css">
+<!--
+  GOOGLE ADSENSE — YER TUTUCU
+  Yayıncı kimliği reklam.js içinde, reklam birimi numaraları aşağıdaki data-slot'larda.
+  Kimlik girilene kadar Google'ın betiği YÜKLENMEZ, alanlar gri kutu olarak görünür.
+-->
+</head>
+<body>
+<header class="site-head">
+  <a class="logo" href="./">
+    <svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><rect x="4" y="2" width="24" height="28" rx="4" fill="currentColor"/><path d="M10 11h12M10 16h12M10 21h7" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg>
+    PDF Kutusu
+  </a>
+  <nav>
+    <a href="nasil-kullanilir.html">Nasıl kullanılır?</a>
+    <a href="gizlilik.html">Gizlilik</a>
+    <a class="dl" href="PDF-Kutusu.html" download="PDF Kutusu.html" title="Tek dosya; internetsiz çalışır, kurulum gerekmez">İnternetsiz sürümü indir</a>
+  </nav>
+</header>
+
+<div class="ad ad-top" data-slot="YYYYYYYYYY" data-format="horizontal" aria-label="Reklam alanı"></div>
+
+<main class="layout">
+  <section class="editor-wrap">
+    <!--
+      YALITIM: sandbox="allow-scripts allow-downloads" — "allow-same-origin" BİLEREK YOK.
+      Bu yüzden çerçevenin kökeni "null"dır: bu sayfadaki hiçbir betik (reklamlar dahil)
+      çerçevenin içini, açılan PDF'i ya da belleğini okuyamaz; çerçeve de dışarı çıkamaz.
+      Çerçevedeki editör ayrıca kendi kuralıyla (CSP) hiçbir sunucuya bağlanamaz.
+    -->
+    <iframe id="editor-frame" src="editor.html"
+      sandbox="allow-scripts allow-downloads"
+      referrerpolicy="no-referrer" allow=""
+      title="PDF Kutusu düzenleyici"></iframe>
+    <p class="note">🔒 PDF'in bu çerçevenin içinde, kendi bilgisayarında işlenir; hiçbir sunucuya yüklenmez.
+      Reklamlar çerçevenin dışındadır ve içine erişemez. <a href="nasil-kullanilir.html#guvenlik">Neden güvenli?</a></p>
+  </section>
+  <aside class="ad ad-side" data-slot="ZZZZZZZZZZ" data-format="vertical" aria-label="Reklam alanı"></aside>
+</main>
+
+<section class="about">
+  <h1>Ücretsiz PDF düzenleyici — dosyan yüklenmez</h1>
+  <p>PDF Kutusu ile birden fazla PDF'i birleştir, sayfaları sürükleyerek sırala, döndür, sil, çoğalt;
+    araya başka bir PDF'ten sayfa ya da JPG/PNG görsel ekle; istediğin sayfaları ayrı bir PDF olarak indir.
+    Bir sayfaya çift tıklayınca yazıyı değiştirebilir, yeni yazı, imza ya da kaşe ekleyebilir,
+    gizli bilgiyi kalıcı olarak karartabilirsin.</p>
+  <p>Kurulum yok, üyelik yok. İstersen <a href="PDF-Kutusu.html" download="PDF Kutusu.html">tek dosyalık internetsiz sürümü</a> indir:
+    çift tıkla, tarayıcında açılsın, internet olmadan da çalışsın.</p>
+  <p class="muted">Kodu açık (MIT lisansı): <a href="https://github.com/koduacik/pdf-kutusu" rel="noopener">github.com/koduacik/pdf-kutusu</a></p>
+  <p class="abone">▶ Bu program <b>Bunun Programı Var</b> kanalında sıfırdan, kamera önünde yazıldı.
+    Her cuma yeni bir program: <a href="https://youtube.com/@programivar" rel="noopener">kanala abone ol</a>.</p>
+</section>
+
+<footer class="site-foot">
+  <span>PDF Kutusu @VERSION@ · <a href="https://ozy2.com/programivar/pdf-kutusu/" rel="noopener">Bunun Programı Var</a></span>
+  <span><a href="gizlilik.html">Gizlilik ve çerezler</a> · <a href="nasil-kullanilir.html">Nasıl kullanılır?</a></span>
+</footer>
+
+<script>
+  // Dosya çerçevenin dışına bırakılırsa tarayıcı sayfadan çıkıp PDF'i açmasın.
+  // Bu kod dosyaya DOKUNMAZ: yalnızca varsayılan davranışı durdurur ve uyarır.
+  window.addEventListener('dragover', function (e) { e.preventDefault(); });
+  window.addEventListener('drop', function (e) {
+    e.preventDefault();
+    var n = document.querySelector('.note');
+    n.classList.add('flash');
+    setTimeout(function () { n.classList.remove('flash'); }, 1600);
+  });
+</script>
+<script src="reklam.js"></script>
+</body>
+</html>

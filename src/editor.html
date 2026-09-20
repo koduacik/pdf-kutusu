@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<!--
+  AĞ YASAĞI: Bu sayfa hiçbir sunucuya bağlanamaz. Aşağıdaki kural tarayıcıya
+  "bu sayfanın dışarıya istek atmasına izin verme" der; kod bir bağlantı kurmaya
+  kalksa bile tarayıcı engeller. Yalnızca sayfanın kendi içindeki (inline) kod,
+  blob:/data: adresleri ve WebAssembly derlemesi serbesttir — bunların hiçbiri ağ değildir.
+-->
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline' 'wasm-unsafe-eval' blob:; worker-src blob:; child-src blob:; style-src 'unsafe-inline'; img-src data: blob:; font-src data: blob:; connect-src 'none'; media-src 'none'; object-src 'none'; frame-src 'none'; manifest-src 'none'; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PDF Kutusu</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='2' width='24' height='28' rx='4' fill='%230f766e'/%3E%3Cpath d='M10 11h12M10 16h12M10 21h7' stroke='white' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+/*@CSS@*/
+</style>
+</head>
+<body>
+<div id="app" class="app" data-state="loading">
+
+  <header class="topbar">
+    <div class="brand">
+      <svg viewBox="0 0 32 32" width="28" height="28" aria-hidden="true"><rect x="4" y="2" width="24" height="28" rx="4" fill="currentColor"/><path d="M10 11h12M10 16h12M10 21h7" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg>
+      <span>PDF Kutusu</span>
+    </div>
+    <div class="actions">
+      <button id="btn-open" class="btn" title="PDF ya da JPG/PNG görsel ekle">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg><span>Dosya ekle</span></button>
+      <button id="btn-blank" class="btn needs-pages" title="Sona boş sayfa ekle">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6z"/></svg><span>Boş sayfa</span></button>
+      <button id="btn-split" class="btn needs-pages" title="Seçtiğin sayfaları ayrı bir PDF olarak indir">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v7H6zM6 14h12v7H6z"/></svg><span>Ayır</span></button>
+      <span class="sep"></span>
+      <button id="btn-undo" class="btn icon-only" title="Geri al (Ctrl+Z)" aria-label="Geri al" disabled>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/></svg></button>
+      <button id="btn-redo" class="btn icon-only" title="İleri al (Ctrl+Shift+Z)" aria-label="İleri al" disabled>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 14 5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h3"/></svg></button>
+      <span class="sep"></span>
+      <button id="btn-save" class="btn primary needs-pages" title="Düzenlenmiş PDF'i indir (Ctrl+S)">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg><span>Kaydet</span></button>
+      <button id="btn-help" class="btn icon-only" title="Yardım ve bilgiler" aria-label="Yardım">?</button>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <section id="empty" class="empty">
+      <div class="drop-card">
+        <svg viewBox="0 0 64 64" width="72" height="72" aria-hidden="true"><path d="M18 6h20l12 12v36a4 4 0 0 1-4 4H18a4 4 0 0 1-4-4V10a4 4 0 0 1 4-4z" fill="none" stroke="currentColor" stroke-width="3"/><path d="M38 6v12h12" fill="none" stroke="currentColor" stroke-width="3"/><path d="M32 46V28m-8 8 8-8 8 8" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <h1>PDF'ini buraya sürükle bırak</h1>
+        <p>ya da</p>
+        <button id="btn-open-big" class="btn primary big">Bilgisayardan dosya seç</button>
+        <p class="muted">Birden fazla PDF seçersen hepsi tek listede birleşir. JPG ve PNG görseller de sayfa olarak eklenir.</p>
+        <p class="privacy">🔒 Dosyaların bu bilgisayardan çıkmaz. Bu sayfa internete bağlanamaz; tarayıcı engeller.</p>
+      </div>
+    </section>
+
+    <section id="pages-view" class="pages-view" hidden>
+      <div class="pages-info">
+        <span id="pages-count"></span>
+        <span class="muted">· Sıralamak için sürükle · Düzenlemek için sayfaya çift tıkla</span>
+      </div>
+      <div id="grid" class="grid" aria-label="Sayfalar"></div>
+    </section>
+  </main>
+
+  <footer class="statusbar">
+    <span id="status">Hazırlanıyor…</span>
+    <span class="muted">PDF Kutusu @VERSION@ · internetsiz çalışır</span>
+  </footer>
+
+  <!-- Sayfa düzenleyici -->
+  <div id="editor" class="editor" hidden role="dialog" aria-modal="true" aria-label="Sayfa düzenleyici">
+    <div class="ed-bar">
+      <div class="ed-tools" role="toolbar" aria-label="Araçlar">
+        <button class="tool" data-tool="select" title="Mevcut yazıya tıkla ve değiştir; eklediklerini sürükleyerek taşı">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3l13 8-6 1.5L9 19z"/></svg><span>Seç / Değiştir</span></button>
+        <button class="tool" data-tool="text" title="Sayfada bir yere tıkla, yazmaya başla">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5h14M12 5v14M9 19h6"/></svg><span>Yazı ekle</span></button>
+        <button class="tool" data-tool="image" title="İmza, kaşe, logo gibi bir görsel ekle">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 16 5-5 4 4 3-3 6 6"/></svg><span>Görsel ekle</span></button>
+        <button class="tool" data-tool="rect" title="Bir yeri örtmek için kutu çiz">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="6" width="16" height="12" rx="1" fill="currentColor" opacity=".35"/><rect x="4" y="6" width="16" height="12" rx="1"/></svg><span>Örtü kutusu</span></button>
+        <button class="tool danger" data-tool="redact" title="Gizli bilgiyi kalıcı olarak sil: sayfa resme çevrilir">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="8" fill="currentColor"/></svg><span>Kalıcı karart</span></button>
+      </div>
+      <div class="ed-props" id="ed-props">
+        <label class="prop prop-text" title="Yazı boyu (punto)">Boy
+          <input id="p-size" type="number" min="4" max="200" step="0.5" value="14"></label>
+        <label class="prop prop-color" title="Renk">Renk
+          <input id="p-color" type="color" value="#000000"></label>
+        <button class="prop prop-text tbtn" id="p-bold" title="Kalın" aria-pressed="false"><b>K</b></button>
+        <label class="prop prop-text" title="Yazı tipi">
+          <select id="p-family"><option value="sans">Düz</option><option value="serif">Tırnaklı</option></select></label>
+        <button class="prop prop-any tbtn danger-text" id="p-delete" title="Seçili öğeyi sil (Delete)">Sil</button>
+      </div>
+      <div class="ed-right">
+        <button class="btn icon-only" id="ed-undo" title="Geri al (Ctrl+Z)" aria-label="Geri al">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 0 10h-3"/></svg></button>
+        <button class="btn icon-only" id="ed-redo" title="İleri al (Ctrl+Shift+Z)" aria-label="İleri al">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 14 5-5-5-5"/><path d="M20 9H9a5 5 0 0 0 0 10h3"/></svg></button>
+        <button class="btn primary" id="ed-done">Bitti</button>
+      </div>
+    </div>
+    <div class="ed-sub">
+      <div class="ed-hint" id="ed-hint"></div>
+      <div class="ed-nav">
+        <button class="btn icon-only" id="ed-zoom-out" title="Uzaklaş" aria-label="Uzaklaş">−</button>
+        <span id="ed-zoom" class="zoom-val"></span>
+        <button class="btn icon-only" id="ed-zoom-in" title="Yakınlaş" aria-label="Yakınlaş">+</button>
+        <span class="sep"></span>
+        <button class="btn icon-only" id="ed-prev" title="Önceki sayfa" aria-label="Önceki sayfa">‹</button>
+        <span id="ed-pageno" class="zoom-val"></span>
+        <button class="btn icon-only" id="ed-next" title="Sonraki sayfa" aria-label="Sonraki sayfa">›</button>
+      </div>
+    </div>
+    <div class="ed-stage" id="ed-stage">
+      <div class="ed-page" id="ed-page">
+        <canvas id="ed-canvas"></canvas>
+        <div class="ed-textlayer" id="ed-textlayer"></div>
+        <div class="ed-edits" id="ed-edits"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="busy" class="busy" hidden><div class="busy-box"><div class="spinner"></div><span id="busy-text">Çalışıyor…</span></div></div>
+  <div id="modal-root"></div>
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <input id="file-input" type="file" accept="application/pdf,.pdf,image/jpeg,image/png,.jpg,.jpeg,.png" multiple hidden>
+  <input id="image-input" type="file" accept="image/png,image/jpeg,.png,.jpg,.jpeg" hidden>
+</div>
+
+<!--@DATA@-->
+<script>
+/*@APP@*/
+</script>
+</body>
+</html>

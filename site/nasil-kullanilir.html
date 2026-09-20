@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nasıl kullanılır? — PDF Kutusu</title>
+<meta name="description" content="PDF Kutusu ile PDF birleştirme, ayırma, sayfa silme, döndürme, yazı değiştirme, imza ekleme ve kalıcı karartma adım adım.">
+<link rel="canonical" href="https://ozy2.com/pdf/nasil-kullanilir.html">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='2' width='24' height='28' rx='4' fill='%230f766e'/%3E%3Cpath d='M10 11h12M10 16h12M10 21h7' stroke='white' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<header class="site-head">
+  <a class="logo" href="./"><svg viewBox="0 0 32 32" width="26" height="26" aria-hidden="true"><rect x="4" y="2" width="24" height="28" rx="4" fill="currentColor"/><path d="M10 11h12M10 16h12M10 21h7" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg>PDF Kutusu</a>
+  <nav><a href="./">Düzenleyiciye dön</a><a href="gizlilik.html">Gizlilik</a></nav>
+</header>
+
+<article class="doc">
+  <h1>PDF Kutusu nasıl kullanılır?</h1>
+
+  <h2>1. PDF'ini aç</h2>
+  <p>PDF dosyanı düzenleyicinin üstüne sürükleyip bırak ya da <b>Dosya ekle</b>'ye tıkla.
+    Birden fazla PDF seçersen hepsinin sayfaları tek bir listede birleşir. JPG ve PNG görseller de
+    birer sayfa olarak eklenir; telefonla çekilmiş fotoğraflar yan dönmez.</p>
+
+  <h2>2. Sayfaları düzenle</h2>
+  <ul>
+    <li><b>Sırala:</b> bir sayfayı tutup istediğin yere sürükle.</li>
+    <li><b>Döndür, çoğalt, sil:</b> sayfanın üstüne gelince sağda çıkan düğmeler.</li>
+    <li><b>Araya ekle:</b> iki sayfanın arasındaki <b>+</b>'ya tıkla; başka bir PDF'ten sayfa, bir görsel ya da boş sayfa ekle.</li>
+    <li><b>Geri al:</b> Ctrl+Z (Mac'te Cmd+Z). İleri al: Ctrl+Shift+Z.</li>
+  </ul>
+
+  <h2>3. Bir sayfanın içini düzenle</h2>
+  <p>Sayfaya <b>çift tıkla</b>. Açılan düzenleyicide:</p>
+  <ul>
+    <li><b>Seç / Değiştir:</b> sayfadaki bir yazıya tıkla, yenisini yaz, Enter'a bas. Yeni yazı aynı yerde, aynı boyda, aynı renkte durur.</li>
+    <li><b>Yazı ekle:</b> bir yere tıkla ve yaz. Boyunu, rengini, kalınlığını üstten seç. Türkçe harfler ve ₺ işareti sorunsuz çalışır.</li>
+    <li><b>Görsel ekle:</b> imza, kaşe ya da logo ekle; sürükleyerek taşı, köşesinden boyutlandır. Şeffaf PNG şeffaf kalır.</li>
+    <li><b>Örtü kutusu:</b> bir yeri kapatmak için kutu çiz.</li>
+    <li><b>Kalıcı karart:</b> gizli bir bilgiyi gerçekten silmek için (aşağıya bak).</li>
+  </ul>
+  <p class="box warn"><b>Önemli:</b> PDF'teki bir yazıyı “değiştirmek”, eski yazının üstünü örtüp yenisini yazmak demektir.
+    Eski yazı görünmez olur ama <b>dosyanın içinde kalır</b>; kopyala-yapıştırla hâlâ okunabilir. “Örtü kutusu” için de aynısı geçerli.
+    Kimlik no, hesap no gibi bir bilgiyi silmek istiyorsan <b>Kalıcı karart</b>'ı kullan: kaydederken o sayfa resme çevrilir ve
+    işaretlediğin yerdeki bilgi dosyadan gerçekten silinir. Bedeli, o sayfadaki yazıların artık seçilememesidir.</p>
+
+  <h2>4. Kaydet</h2>
+  <p><b>Kaydet</b>'e tıkla. Düzenlenmiş dosya, ilk açtığın dosyanın adına <code>_duzenlendi</code> eklenerek indirilir
+    (ör. <code>dilekce_duzenlendi.pdf</code>). Yalnızca bazı sayfaları istiyorsan <b>Ayır</b>'a tıkla ve
+    <code>1-3, 7, 10-son</code> gibi bir aralık yaz.</p>
+
+  <h2>Ne yapmaz?</h2>
+  <ul>
+    <li>Şifreli (parolalı ya da düzenleme kısıtlı) PDF'leri açmaz.</li>
+    <li>Taranmış belgedeki yazıyı tanımaz (OCR yok); taranmış sayfada “yazıya tıkla, değiştir” çalışmaz.</li>
+    <li>Eski yazıyı gerçekten silmez — bunun için Kalıcı karart var.</li>
+    <li><b>E-imzalı (elektronik imzalı) bir PDF'i düzenlersen imza geçersiz olur.</b> e-Devlet belgesi, e-fatura gibi imzalı resmî belgelerin aslını sakla.</li>
+  </ul>
+
+  <h2 id="guvenlik">Neden güvenli? PDF'im neden sunucuya gitmiyor?</h2>
+  <p>Düzenleyici tamamen tarayıcında çalışan bir programdır. PDF'i açtığında dosya internete gönderilmez;
+    bilgisayarının belleğinde işlenir ve “Kaydet” deyince yine bilgisayarına indirilir. Bu sitenin sunucusu
+    dosyanı hiç görmez.</p>
+  <p>Sayfada reklam var; peki reklamlar PDF'ini görebilir mi? Hayır, çünkü:</p>
+  <ol>
+    <li><b>Düzenleyici ayrı ve kilitli bir çerçevede çalışır.</b> Çerçeve <code>sandbox="allow-scripts allow-downloads"</code>
+      ile açılır ve <code>allow-same-origin</code> bilerek verilmez. Tarayıcı bu çerçeveye “kimsesiz” (opak, <code>null</code>) bir köken atar.
+      Tarayıcının temel güvenlik kuralı (aynı köken ilkesi) gereği, ana sayfadaki hiçbir betik — reklam betikleri dahil —
+      farklı kökenli bir çerçevenin içini, belgesini, belleğini ya da dosyalarını okuyamaz.</li>
+    <li><b>Reklamların kendisi de ayrı çerçevelerdedir.</b> Google reklamları kendi alan adlarından, kendi çerçevelerinde gösterilir;
+      onlar da ne ana sayfaya ne düzenleyiciye erişebilir.</li>
+    <li><b>Düzenleyici internete bağlanamaz.</b> Düzenleyici dosyasının içinde bir güvenlik kuralı (Content-Security-Policy) var:
+      “bu sayfa hiçbir sunucuya istek atamaz”. Kural kodda bir hata olsa bile tarayıcı tarafından uygulanır; yani PDF'in
+      düzenleyicinin içinden dışarı gönderilemez.</li>
+    <li><b>Düzenleyici ile sayfa arasında veri alışverişi yok.</b> Düzenleyici ana sayfaya hiçbir mesaj göndermez, ondan mesaj da dinlemez.</li>
+  </ol>
+  <p class="box">Hiç risk almak istemiyorsan <a href="PDF-Kutusu.html" download="PDF Kutusu.html">internetsiz sürümü indir</a>:
+    tek bir dosya, reklamsız; internet kapalıyken de çalışır. Kodu açıktır: <a href="https://github.com/koduacik/pdf-kutusu">github.com/koduacik/pdf-kutusu</a>.</p>
+</article>
+
+<footer class="site-foot">
+  <span>PDF Kutusu @VERSION@</span>
+  <span><a href="./">Düzenleyici</a> · <a href="gizlilik.html">Gizlilik ve çerezler</a></span>
+</footer>
+</body>
+</html>

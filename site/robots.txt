@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /editor.html
+Sitemap: https://ozy2.com/pdf/sitemap.xml

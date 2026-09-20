@@ -1,0 +1,18 @@
+{
+  "name": "pdf-kutusu",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tarayıcıda çalışan, internetsiz PDF düzenleyici",
+  "license": "MIT",
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "devDependencies": {
+    "@pdf-lib/fontkit": "1.1.1",
+    "dejavu-fonts-ttf": "2.37.3",
+    "esbuild": "0.28.2",
+    "fflate": "0.8.3",
+    "pdf-lib": "1.17.1",
+    "pdfjs-dist": "6.3.289"
+  }
+}
